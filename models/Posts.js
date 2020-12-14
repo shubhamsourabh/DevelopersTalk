@@ -30,7 +30,11 @@ const PostSchema = new Schema({
 				type: Schema.Types.ObjectId,
 				ref: "users",
 			},
+
 			text: {
+				type: String,
+			},
+			name: {
 				type: String,
 			},
 			avatar: {
