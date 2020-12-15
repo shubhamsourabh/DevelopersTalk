@@ -2,6 +2,7 @@ import {
 	GET_PROFILE,
 	PROFILE_ERROR,
 	CLEAR_PROFILE,
+	CLEAN_PROFILE,
 	UPDATE_PROFILE,
 	GET_PROFILES,
 	GET_REPOS,
@@ -43,6 +44,14 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				profile: null,
+				//profiles: [],
+				loading: false,
+			};
+		case CLEAN_PROFILE:
+			return {
+				...state,
+				profile: null,
+				profiles: [],
 				loading: false,
 			};
 		case GET_REPOS:

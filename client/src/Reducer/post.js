@@ -3,6 +3,7 @@ import {
 	POST_ERROR,
 	UPDATE_LIKES,
 	DELETE_POST,
+	CLEAR_POST,
 	ADD_POST,
 	GET_POST,
 	ADD_COMMENT,
@@ -18,6 +19,11 @@ const initialState = {
 export default function (state = initialState, action) {
 	const { type, payload } = action;
 	switch (type) {
+		case CLEAR_POST:
+			return {
+				...state,
+				posts: [],
+			};
 		case GET_POSTS:
 			return {
 				...state,

@@ -1,14 +1,22 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
 import ProfileItem from "./ProfileItem";
 import { getProfiles } from "../../actions/profile";
+//import SearchProfile from "./SearchProfile";
 
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
+	const [filteredProfile, setfilteredProfile] = useState(profiles);
+	const [search, setSearch] = useState("");
 	useEffect(() => {
 		getProfiles();
-	}, [getProfiles]);
+		setfilteredProfile(
+			profiles.filter((profile) => {
+				return profile.user.name.toLowerCase().includes(search.toLowerCase());
+			})
+		);
+	}, [getProfiles, search, profiles]);
 
 	return (
 		<Fragment>
@@ -16,6 +24,11 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
 				<Spinner />
 			) : (
 				<Fragment>
+					<input
+						type="text"
+						placeholder="Search For Developers"
+						onChange={(e) => setSearch(e.target.value)}
+					/>
 					<h1 className="large text-primary">Developers</h1>
 					<p className="lead">
 						<i className="fab fa-connectdevelop" /> Browse and connect with
@@ -23,7 +36,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
 					</p>
 					<div className="profiles">
 						{profiles.length > 0 ? (
-							profiles.map((profile) => (
+							filteredProfile.map((profile) => (
 								<ProfileItem key={profile._id} profile={profile} />
 							))
 						) : (
